@@ -1,4 +1,4 @@
-package com.telusko.springBootWebApp.Controllers;
+package com.telusko.springBootWebApp.controllers;
 
 import java.util.Iterator;
 import java.util.List;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.telusko.springBootWebApp.Models.Product;
-import com.telusko.springBootWebApp.Service.ProductService;
+import com.telusko.springBootWebApp.models.Product;
+import com.telusko.springBootWebApp.service.ProductService;
 
 @RestController
 public class ProductController {

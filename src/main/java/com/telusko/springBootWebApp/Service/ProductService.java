@@ -1,54 +1,52 @@
-package com.telusko.springBootWebApp.Service;
+package com.telusko.springBootWebApp.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.telusko.springBootWebApp.Models.Product;
+import com.telusko.springBootWebApp.models.Product;
+import com.telusko.springBootWebApp.repository.ProductRepo;
 
 @Service
 public class ProductService {
 	
-	List<Product> products = new ArrayList<>(Arrays.asList(
-			
-			new Product(101,"Motorola",14000),
-			new Product(102,"Iphone",125000),
-			new Product(103,"Samsung",10000)
-			));
+	@Autowired
+	ProductRepo prodRepo;
+	
+//	List<Product> products = new ArrayList<>(Arrays.asList(
+//			
+//			new Product(101,"Motorola",14000),
+//			new Product(102,"Iphone",125000),
+//			new Product(103,"Samsung",10000)
+//			));
 	
 //--------------------------------------------------------------------
 	//Get All Products
 	
 	public List<Product> getProduct()
 	{
-		return products;
+		return prodRepo.findAll();
 	}
 	
 //--------------------------------------------------------------------
 	//Get Product by ID
 		
 	public Product getProductById(int prodId) 
-	{
-		for (Product product : products) 
-		{
-			if(product.getProdId()==prodId)
-			{
-				return product;
-			}
-		}
-		
-		return new Product(000,"No Item",00000);
+	{		
+		return prodRepo.findById(prodId).orElse(new Product());
 	}
 
 //--------------------------------------------------------------------
-	//Get Add Product
+	// Add Product
 	
 	public void addProduct(Product prod)
 	{
-		products.add(prod);
+		prodRepo.save(prod);
 	}
 	
 //-------------------------------------------------------------------
@@ -56,32 +54,14 @@ public class ProductService {
 	
 	public void updateProduct(Product prod) 
 	{
-		for (Product product : products) 
-		{
-			if(prod.getProdId()==product.getProdId())
-			{
-				product.setProdName(prod.getProdName());
-				product.setProdPrice(prod.getProdPrice());
-			}
-		}
-			
+		prodRepo.save(prod);
 	}
 //-------------------------------------------------------------------
 	//Delete Existing Product
 	
 	public void deleteProduct(int prodId) 
 	{
-		int counter = 0;
-		for(Product product:products)
-		{
-			if(prodId==product.getProdId())
-			{
-				break;
-			}
-			counter++;
-		}
-		
-		products.remove(counter);
+		prodRepo.deleteById(prodId);
 	}
 			
 	
